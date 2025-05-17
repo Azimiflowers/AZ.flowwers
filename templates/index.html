@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>شناسایی گل با هوش مصنوعی</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css');
+  /* بک‌گراند صفحه */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Vazir', Tahoma, sans-serif;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ7VANAVCQbmS6B9dEcpMc1L5CtdoafWqTsrQpQ5uhbB9KUKdnMW4Gtkw3-Q1mka54wQk&usqp=CAU') no-repeat center center fixed;
+    background-size: cover;
+    color: #f0d084; /* طلایی روشن */
+    direction: rtl;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  /* کادر سفید نیمه شفاف برای محتوا */
+  .container {
+    background: rgba(0, 0, 0, 0.7); /* مشکی شفاف */
+    padding: 35px 30px;
+    border-radius: 20px;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 0 20px #f0d084aa;
+    text-align: center;
+  }
+  h1 {
+    font-size: 2.4rem;
+    margin-bottom: 30px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #f0d084;
+    text-shadow: 0 0 8px #f0d084cc;
+  }
+  form {
+    margin-bottom: 35px;
+  }
+  input[type="file"] {
+    display: none;
+  }
+  label {
+    background-color: #b78824;
+    padding: 13px 28px;
+    border-radius: 30px;
+    color: black;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+    user-select: none;
+    box-shadow: 0 0 12px #b78824aa;
+  }
+  label:hover {
+    background-color: #d4b95f;
+  }
+  button {
+    background-color: #b78824;
+    border: none;
+    padding: 13px 30px;
+    border-radius: 30px;
+    color: black;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-left: 15px;
+    box-shadow: 0 0 15px #b78824cc;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #d4b95f;
+  }
+  .result-box {
+    background-color: #2e2e2edd;
+    padding: 25px 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #f0d084cc;
+    color: #f0d084;
+    text-align: right;
+    font-size: 1.15rem;
+    line-height: 1.6;
+  }
+  .result-box h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 800;
+    color: #f0d084;
+    text-shadow: 0 0 6px #f0d084cc;
+  }
+  .error {
+    background-color: #aa2626dd;
+    color: #f8d6d6;
+    padding: 15px 20px;
+    margin-top: 20px;
+    border-radius: 15px;
+    font-weight: 700;
+    box-shadow: 0 0 12px #aa2626cc;
+  }
+  a.more-info {
+    display: inline-block;
+    margin-top: 12px;
+    font-weight: 700;
+    color: #d4b95f;
+    text-decoration: none;
+    text-shadow: 0 0 5px #d4b95fcc;
+  }
+  a.more-info:hover {
+    text-decoration: underline;
+  }
+  @media (max-width: 500px) {
+    .container {
+      padding: 25px 20px;
+    }
+    h1 {
+      font-size: 1.8rem;
+    }
+    label, button {
+      font-size: 1rem;
+      padding: 12px 20px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>شناسایی گل از روی عکس</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="image">انتخاب عکس</label>
+        <input type="file" id="image" name="image" accept="image/*" required />
+        <button type="submit">شناسایی</button>
+    </form>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if result %}
+        <div class="result-box">
+            <h2>نتیجه شناسایی:</h2>
+            <p><strong>نام گل:</strong> {{ result.name }}</p>
+            <p><strong>توضیح:</strong> {{ result.description }}</p>
+            {% if result.url %}
+                <a href="{{ result.url }}" target="_blank" class="more-info">اطلاعات بیشتر</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>
